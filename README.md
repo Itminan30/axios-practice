@@ -15,7 +15,7 @@ npm install axios
 - [Documentation](https://axios-http.com/docs/intro)
 - [Github](https://github.com/axios/axios)
 
-## For Mock Server Use [json-server](https://github.com/typicode/json-server)
+## [Json Server](https://github.com/typicode/json-server)
 
 ### Json Server Installation
 
