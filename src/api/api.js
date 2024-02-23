@@ -17,6 +17,20 @@ api.interceptors.request.use(
     }
 )
 
+// response interceptor
+api.interceptors.response.use(
+    (response) => {
+        return response
+    },
+    (error) => {
+        if (error.response) {
+            error.message = `Erroror from server: status: ${error.response.status} - message: ${error.response.statusText}`;
+        }
+
+        return Promise.reject(error);
+    }
+)
+
 // const token = "jhdjfhdjfhdjfh";
 
 // // request interceptor
