@@ -4,7 +4,6 @@ import api from "./api/api.js";
 import AddPost from "./components/AddPost.jsx";
 import EditPost from "./components/EditPost.jsx";
 import Posts from "./components/Posts";
-import axios from "axios";
 
 export default function App() {
   const [posts, setPosts] = useState([]);
@@ -16,9 +15,9 @@ export default function App() {
 
       const id = posts.length ? Number(posts[posts.length - 1].id) + 1 : 1;
       const finalPost = { id: id.toString(), ...newPost };
-      const response = await axios.post("http://localhost:8000/posts", finalPost);
+      const response = await api.post("/posts", finalPost);
       setPosts([...posts, response.data]);
-      
+
     } catch (error) {
       setError(error.message);
     }
@@ -28,7 +27,7 @@ export default function App() {
     if (confirm("Are you sure you want to delete the post?")) {
       try {
 
-        await axios.delete(`http://localhost:8000/posts/${postId}`);
+        await api.delete(`/posts/${postId}`);
         const newPosts = posts.filter(post => post.id !== postId);
         setPosts(newPosts);
 
@@ -44,34 +43,20 @@ export default function App() {
   const handleEditPost = async (updatedPost) => {
     try {
 
-      const response = await axios.patch(`http://localhost:8000/posts/${updatedPost.id}`, updatedPost);
+      const response = await api.patch(`/posts/${updatedPost.id}`, updatedPost);
       const updatedPosts = posts.map((post) => post.id === response.data.id ? response.data : post);
       setPosts(updatedPosts);
 
     } catch (error) {
       setError(error.message)
     }
-    // try {
-    //   const response = await api.patch(
-    //     `/posts/${updatedPost.id}`,
-    //     updatedPost
-    //   );
-
-    //   const updatedPosts = posts.map((post) =>
-    //     post.id === response.data.id ? response.data : post
-    //   );
-
-    //   setPosts(updatedPosts);
-    // } catch (err) {
-    //   setError(err.message);
-    // }
   };
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
 
-        const response = await axios.get("http://localhost:8000/posts");
+        const response = await api.get("/posts");
 
         if (response && response.data) {
           setPosts(response.data);
