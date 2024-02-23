@@ -5,7 +5,6 @@ import AddPost from "./components/AddPost.jsx";
 import EditPost from "./components/EditPost.jsx";
 import Posts from "./components/Posts";
 import axios from "axios";
-// import initialPosts from "./data/db.js";
 
 export default function App() {
   const [posts, setPosts] = useState([]);
@@ -15,7 +14,7 @@ export default function App() {
   const handleAddPost = async (newPost) => {
     try {
       const id = posts.length ? Number(posts[posts.length - 1].id) + 1 : 1;
-      const finalPost = { id, ...newPost };
+      const finalPost = { id: id.toString(), ...newPost };
       const response = await axios.post("http://localhost:8000/posts", finalPost);
       setPosts([...posts, response.data]);
     } catch (error) {
@@ -24,17 +23,18 @@ export default function App() {
   };
 
   const handleDeletePost = async (postId) => {
-    // if (confirm("Are you sure you want to delete the post?")) {
-    //   try {
-    //     await api.delete(`/posts/${postId}`);
-    //     const newPosts = posts.filter((post) => post.id !== postId);
-    //     setPosts(newPosts);
-    //   } catch (err) {
-    //     setError(err.message);
-    //   }
-    // } else {
-    //   console.log("You chose not to delete the post!");
-    // }
+    if(confirm("Are you sure you want to delete the post?")) {
+      try {
+        await axios.delete(`http://localhost:8000/posts/${postId}`);
+        const newPosts = posts.filter(post => post.id !== postId);
+        setPosts(newPosts);
+      } catch (error) {
+        setError(error.message)
+      }
+    }
+    else {
+      console.log("You chose not to delete the post");
+    }
   };
 
   const handleEditPost = async (updatedPost) => {
