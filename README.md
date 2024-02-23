@@ -36,7 +36,7 @@ Install json-server with `npm`:
 ```
 
 - Run the server using `npm run server` command
-Example Data:
+- Example Data:
 
 ```json
 {
