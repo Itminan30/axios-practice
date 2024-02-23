@@ -12,11 +12,18 @@ export default function App() {
   const [post, setPost] = useState(null); // post I am editing
   const [error, setError] = useState(null);
 
-  const handleAddPost = () => {
-    
+  const handleAddPost = async (newPost) => {
+    try {
+      const id = posts.length ? Number(posts[posts.length - 1].id) + 1 : 1;
+      const finalPost = { id, ...newPost };
+      const response = await axios.post("http://localhost:8000/posts", finalPost);
+      setPosts([...posts, response.data]);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
-  const handleDeletePost = () => {
+  const handleDeletePost = async (postId) => {
     // if (confirm("Are you sure you want to delete the post?")) {
     //   try {
     //     await api.delete(`/posts/${postId}`);
@@ -30,7 +37,7 @@ export default function App() {
     // }
   };
 
-  const handleEditPost = () => {
+  const handleEditPost = async (updatedPost) => {
     // try {
     //   const response = await api.patch(
     //     `/posts/${updatedPost.id}`,
