@@ -4,6 +4,19 @@ const api = axios.create({
     baseURL: "http://localhost:8000/"
 })
 
+const token = "asdfghjkl;qwertyuiopzxcvm,/.";
+// request interceptor
+api.interceptors.request.use(
+    (config) => {
+        console.log(config);
+        config.headers["Authorization"] = `Bearer ${token}`;
+        return config
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+)
+
 // const token = "jhdjfhdjfhdjfh";
 
 // // request interceptor

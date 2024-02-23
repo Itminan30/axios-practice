@@ -19,10 +19,10 @@ npm install axios
 
 ### Json Server Installation
 
-Install json-server with `npm`:
+Install json-server with `npm` (Stable Version 0.17.4):
 
 ```bash
-  npm install json-server
+  npm install json-server@0.17.4
 ```
 
 ### Json Server Usage/Examples
@@ -32,7 +32,7 @@ Install json-server with `npm`:
 - In package.json add these texts inside the scripts section:
 
 ```javascript
-"server": "npx json-server -p 8000 ./src/data/db.json"
+"server": "npx json-server -p 8000 --no-cors ./src/data/db.json"
 ```
 
 - Run the server using `npm run server` command
